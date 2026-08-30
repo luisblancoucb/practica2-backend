@@ -1,12 +1,9 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Practica2.Api.Models;
+namespace Practica2.Api.DTOs.Servicios;
 
-public class Servicio
+public class ServicioRequest
 {
-    [Key]
-    public int Id { get; set; }
-
     [Required]
     [MaxLength(100)]
     public string Nombre { get; set; } = string.Empty;
@@ -27,6 +24,4 @@ public class Servicio
     public int DuracionMinutos { get; set; }
 
     public bool Activo { get; set; } = true;
-
-    public ICollection<Cita> Citas { get; set; } = new List<Cita>();
 }
