@@ -68,6 +68,22 @@ builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
+using (IServiceScope scope = app.Services.CreateScope())
+{
+    AppDbContext context =
+        scope.ServiceProvider.GetRequiredService<AppDbContext>();
+
+    IPasswordHasher<Usuario> passwordHasher =
+        scope.ServiceProvider
+            .GetRequiredService<IPasswordHasher<Usuario>>();
+
+    await AdministradorSeeder.CrearAdministradorInicialAsync(
+        context,
+        passwordHasher,
+        app.Configuration
+    );
+}
+
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
