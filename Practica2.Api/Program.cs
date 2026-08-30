@@ -1,4 +1,15 @@
+using Microsoft.EntityFrameworkCore;
+using Practica2.Api.Data;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlite(
+        builder.Configuration.GetConnectionString("DefaultConnection")
+    )
+);
+
+builder.Services.AddControllers();
 
 // Add services to the container.
 
