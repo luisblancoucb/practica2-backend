@@ -6,6 +6,7 @@ using Practica2.Api.Data;
 using Practica2.Api.Services;
 using Microsoft.AspNetCore.Identity;
 using Practica2.Api.Models;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -63,7 +64,14 @@ builder.Services
     });
 
 builder.Services.AddAuthorization();
-builder.Services.AddControllers();
+builder.Services
+    .AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(
+            new JsonStringEnumConverter()
+        );
+    });
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
