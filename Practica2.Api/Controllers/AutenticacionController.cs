@@ -6,6 +6,7 @@ using Practica2.Api.Data;
 using Practica2.Api.DTOs.Autenticacion;
 using Practica2.Api.Models;
 using Practica2.Api.Services;
+using System.Security.Claims;
 
 namespace Practica2.Api.Controllers;
 
@@ -110,4 +111,18 @@ public class AutenticacionController : ControllerBase
 
         return Ok(respuesta);
     }
+    
+    [Authorize]
+    [HttpGet("perfil")]
+    public ActionResult ObtenerPerfil()
+    {
+        return Ok(new
+        {
+            id = User.FindFirstValue(ClaimTypes.NameIdentifier),
+            nombre = User.FindFirstValue(ClaimTypes.Name),
+            correo = User.FindFirstValue(ClaimTypes.Email),
+            rol = User.FindFirstValue(ClaimTypes.Role)
+        });
+    }
+
 }
