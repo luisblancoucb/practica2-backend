@@ -28,7 +28,7 @@ public class AutenticacionController : ControllerBase
         _passwordHasher = passwordHasher;
     }
 
-    [AllowAnonymous]
+    [Authorize(Roles = "Administrador")]
     [HttpPost("registro")]
     public async Task<ActionResult> Registrar(RegistroRequest request)
     {
@@ -50,7 +50,7 @@ public class AutenticacionController : ControllerBase
         {
             Nombre = request.Nombre.Trim(),
             Correo = correoNormalizado,
-            Rol = "Usuario"
+            Rol = "Empleado"
         };
 
         usuario.PasswordHash = _passwordHasher.HashPassword(

@@ -9,7 +9,7 @@ namespace Practica2.Api.Controllers;
 
 [ApiController]
 [Route("api/servicios")]
-[Authorize(Roles = "Administrador")]
+[Authorize(Roles = "Administrador,Empleado")]
 public class ServiciosController : ControllerBase
 {
     private readonly AppDbContext _context;
@@ -53,6 +53,7 @@ public class ServiciosController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = "Administrador")]
     public async Task<ActionResult<ServicioResponse>> Crear(ServicioRequest request)
     {
         Servicio servicio = new()
@@ -77,6 +78,7 @@ public class ServiciosController : ControllerBase
     }
 
     [HttpPut("{id:int}")]
+    [Authorize(Roles = "Administrador")]
     public async Task<ActionResult<ServicioResponse>> Actualizar(int id, ServicioRequest request)
     {
         Servicio? servicio = await _context.Servicios.FindAsync(id);
@@ -101,6 +103,7 @@ public class ServiciosController : ControllerBase
     }
 
     [HttpDelete("{id:int}")]
+    [Authorize(Roles = "Administrador")]
     public async Task<IActionResult> Eliminar(int id)
     {
         Servicio? servicio = await _context.Servicios.FindAsync(id);

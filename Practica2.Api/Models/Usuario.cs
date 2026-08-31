@@ -21,5 +21,5 @@ public class Usuario
 
     [Required]
     [MaxLength(30)]
-    public string Rol { get; set; } = "Usuario";
+    public string Rol { get; set; } = "Empleado";
 }

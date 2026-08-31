@@ -9,7 +9,7 @@ namespace Practica2.Api.Controllers;
 
 [ApiController]
 [Route("api/citas")]
-[Authorize(Roles = "Administrador")]
+[Authorize(Roles = "Administrador,Empleado")]
 public class CitasController : ControllerBase
 {
     private readonly AppDbContext _context;
@@ -57,6 +57,7 @@ public class CitasController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = "Administrador")]
     public async Task<ActionResult<CitaResponse>> Crear(CitaRequest request)
     {
         if (request.FechaHora == default)
@@ -120,6 +121,7 @@ public class CitasController : ControllerBase
     }
 
     [HttpPut("{id:int}")]
+    [Authorize(Roles = "Administrador")]
     public async Task<ActionResult<CitaResponse>> Actualizar(int id, CitaRequest request)
     {
         Cita? cita = await _context.Citas
@@ -186,6 +188,7 @@ public class CitasController : ControllerBase
     }
 
     [HttpDelete("{id:int}")]
+    [Authorize(Roles = "Administrador")]
     public async Task<IActionResult> Eliminar(int id)
     {
         Cita? cita = await _context.Citas.FindAsync(id);

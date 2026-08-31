@@ -9,7 +9,7 @@ namespace Practica2.Api.Controllers;
 
 [ApiController]
 [Route("api/clientes")]
-[Authorize(Roles = "Administrador")]
+[Authorize(Roles = "Administrador,Empleado")]
 public class ClientesController : ControllerBase
 {
     private readonly AppDbContext _context;
@@ -53,6 +53,7 @@ public class ClientesController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = "Administrador")]
     public async Task<ActionResult<ClienteResponse>> Crear(ClienteRequest request)
     {
         Cliente cliente = new()
@@ -77,6 +78,7 @@ public class ClientesController : ControllerBase
     }
 
     [HttpPut("{id:int}")]
+    [Authorize(Roles = "Administrador")]
     public async Task<ActionResult<ClienteResponse>> Actualizar(int id, ClienteRequest request)
     {
         Cliente? cliente = await _context.Clientes.FindAsync(id);
@@ -101,6 +103,7 @@ public class ClientesController : ControllerBase
     }
 
     [HttpDelete("{id:int}")]
+    [Authorize(Roles = "Administrador")]
     public async Task<IActionResult> Eliminar(int id)
     {
         Cliente? cliente = await _context.Clientes.FindAsync(id);
